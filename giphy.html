@@ -50,7 +50,7 @@
             $('.jumbotron').css(styleJumbotron)
 
 
-//STEP 1: Make buttons populate from array.
+//STEP 1: Make buttons populate from array. Create it with a class and value to eventually link to it.
 //global vars
         var gifArray = ["deadpool", "the big lebowski", "ferris bueller", "the nightmare before christmas", "the matrix", "the princess bride", "the fifth element", "fight club", "wreck it ralph", "pulp fiction", "groundhog day", "blazing saddles"]
 
@@ -81,7 +81,6 @@
         $('#searchButton').on("click", function search(){
         	event.preventDefault();
         	searchInput = $('#searchBar').val().trim();
-        	console.log(searchInput);
         	gifArray.push(searchInput);
         	console.log(gifArray);
         	createButtons()
@@ -95,40 +94,36 @@
 	var gifPlaceHolder
 	var gifsAjax
 	var gifName
-	 
-		$('#buttons').on("click", function(){
-			function displayGifs() {
-		        gifName = $(this).attr("value");
-		        console.log(gifName)
-		        alert(gifName);
-		      }
- displayGifs()
+	
+        			$('.movieTitles').on("click", function(){
+        				        	   	$('#gifsAppearHere').empty();
 
- // WHY FUCKING UNDEFINED
-
-			urlString = "http://api.giphy.com/v1/gifs/search?q=" + gifName + "&api_key=dc6zaTOxFJmzC&limit=10"
-
-
-        	for (var i = 0; i < 10; i++){
+						gifName = $(this).attr("value");
+           			 	console.log(gifName)
+             			 alert(gifName);
+     					 urlString = "http://api.giphy.com/v1/gifs/search?q=" + gifName + "&api_key=dc6zaTOxFJmzC&limit=10"
         				$.ajax({
 					        url: urlString,
 					        method: "GET",
 					        }).done(function(gifs){
+					        	for (var i = 0; i < 10; i++){
 					        	gifsAjax = gifs.data
 				        		gifPlaceHolder = gifs;
-						        //var active = gifsAjax[i].url
-								//var still = gifsAjax[i].images.fixed_height_still.url
-								//var rating = gifsAjax[i].rating
+						        var active = gifsAjax[i].url
+								var still = gifsAjax[i].images.fixed_height_still.url
+								var rating = gifsAjax[i].rating
 
-								// var actualGif = $("<img>");
-								// actualGif.attr("src", gifsAjax[i].images.fixed_height_still.url)
-								// actualGif.attr("state", "still")
+								var actualGif = $("<img>");
+								actualGif.attr("src", gifsAjax[i].images.fixed_height_still.url)
+								actualGif.attr("state", "still")
 
-								// $('#gifsAppearHere').append(actualGif)
-								// $("#gifsAppearHere").append('<<p> Rating is:' + rating + '</p>')
+								$('#gifsAppearHere').append(actualGif)
+								$("#gifsAppearHere").append('<<p> Rating is:' + rating + '</p>')
+							}
            					})
-        		}
-        	})
+        		   })
+
+        	
 
 		// var stillState = $(this).attr("state")
 		// if (stateStill === "still"){
